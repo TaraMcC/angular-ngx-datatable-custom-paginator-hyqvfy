@@ -1,0 +1,31 @@
+<div class="controls">
+  <div>
+    <label for="per-page">
+      Per Page:
+    </label>
+    <select class="page-limit"
+      id="per-page"
+      (change)="onLimitChange($event.target.value)"
+    >
+      <option class="page-limit-option"
+        *ngFor="let option of pageLimitOptions"
+        [value]="option.value"
+        [selected]="option.value == currentPageLimit"
+      >
+        {{ option.value }}
+      </option>
+    </select>
+  </div>
+</div>
+<button class="bt btn-sm btn-success" (click)="_addcolumn()">Add Column</button>
+<ngx-datatable #table class="material" [rows]="rows" [columns]="column" [columnMode]="'force'" [headerHeight]="50"
+  [footerHeight]="50" [rowHeight]="'auto'" [limit]="10">
+  <ngx-datatable-footer>
+    <ng-template let-rowCount="rowCount" let-pageSize="pageSize" let-selectedCount="selectedCount" let-curPage="curPage"
+      let-offset="offset" ngx-datatable-footer-template>
+      <app-datatable-pager [page]="curPage" [visiblePagesCount]="currentVisible" [size]="pageSize" [count]="rowCount"
+        [hidden]="false" (change)="table.onFooterPage($event)">
+      </app-datatable-pager>
+    </ng-template>
+  </ngx-datatable-footer>
+</ngx-datatable>
